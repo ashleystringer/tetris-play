@@ -1,0 +1,26 @@
+* Create a menu [X]
+* Create a board [X]
+* Create a way to display a piece [X]
+* Create a way to take input from keys [X]
+* Create a way to move the piece down, left, and right [X]
+* Make sure the piece is properly bound walls of the board 
+* Create a way to change the orientation of the piece
+
+
+
+
+Working idea
+- class Board
+    - 
+
+- component Board
+    - Contains display of board
+
+- class Piece
+    - Contains piece type
+    - Contains location 
+    - Contain orientation
+
+- component GameController
+    - Contains animation loop
+    - Contains key input
