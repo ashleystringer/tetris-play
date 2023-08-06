@@ -18,6 +18,7 @@ function reducer(key, action){
         case ACTIONS.UP:
             //change orientation
             console.log("UP");
+            // return { action: "rotate" };
             break;
         case ACTIONS.LEFT:
             console.log("LEFT");
@@ -30,7 +31,7 @@ function reducer(key, action){
             return {x: 0, y: 1};
         case ACTIONS.PAUSE:
             console.log("PAUSE");
-            //pause game
+            // return { action: "pause" };
             break;
         default:
             break;
@@ -43,7 +44,6 @@ export default function Tetris() {
     const columns = 10; 
 
     const [key, dispatch] = useReducer(reducer, {}); 
-
     const [board, setBoard] = useState(null);
 
     useEffect(() => {

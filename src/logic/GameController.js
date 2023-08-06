@@ -5,13 +5,15 @@
 
     }
 
-    let now = Date.now();
+    let dropTime = Date.now();
 
-    function dropDown(now){
-        let delta = Date.now() - now;
+    function dropDown(){
 
-        if(delta > 1000){
-            now = 0;
+        let now = Date.now();
+        let deltaTime = now - dropTime;
+
+        if(deltaTime > 1000){
+            dropTime = Date.now();
             requestAnimationFrame(dropDown(now));
         }
     }

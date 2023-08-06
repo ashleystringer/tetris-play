@@ -9,14 +9,17 @@ export default class Piece {
   randomizePiece() {
     return tetronimoes[Math.floor(Math.random() * tetronimoes.length)];
   }
-  /*
-  for (let y = 0; y < this.piece.piece.length; y++){
-    for(let x = 0; x < y; x++){
-      [this.piece.piece[x][y], this.piece.piece[y][x]] =
-      [this.piece.piece[y][x], this.piece.piece[x][y]]; 
-    }
-  }
 
-  this.piece.piece.forEach(row => row.reverse());
-  */
+  rotate() {
+    for (let y = 0; y < this.piece.length; y++) {
+      for (let x = 0; x < y; x++) {
+        [this.piece[x][y], this.piece[y][x]] = [
+          this.piece[y][x],
+          this.piece[x][y]
+        ];
+      }
+    }
+
+    this.piece.forEach(row => row.reverse());
+  }
 }

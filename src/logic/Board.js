@@ -77,7 +77,7 @@ export default class Board {
         if (pieceGrid[r][c] !== 0) {
           const x = this.piece.x + r;
           const y = this.piece.y + c;
-          this.drawPixel(x, y, "white");
+          this.drawPixel(x, y, "white"); //x, y
         }
       }
     }
@@ -90,7 +90,7 @@ export default class Board {
         if (pieceGrid[r][c] !== 0) {
           const x = this.piece.x + r;
           const y = this.piece.y + c;
-          this.drawPixel(x, y, "blue");
+          this.drawPixel(x, y, "blue"); //x, y
         }
       }
     }
@@ -105,25 +105,17 @@ export default class Board {
     const newX = this.piece.x + x;
     const newY = this.piece.y + y;
 
-    console.log(`newX: ${newX}, newY: ${newY}`);
+    //console.log(`newX: ${newX}, newY: ${newY}`);
 
     if (this.isBound(newX, newY)) {
+      //newX, newY
       //undraw board
       this.undrawPiece();
-      console.log("{x, y} are bound");
+      //console.log("{x, y} are bound");
       this.piece.x += x;
       this.piece.y += y;
       this.drawPiece();
     }
-    /*
-    for (let r = 0; r < pieceGrid.length; r++) {
-      for (let c = 0; c < pieceGrid[0].length; c++) {
-        if (pieceGrid[r][c] !== 0) {
-            
-        }
-      }
-    }
-    */
   }
 
   //reset board
@@ -131,15 +123,29 @@ export default class Board {
   //detect collision
   //board bounds
   isBound(x, y) {
-    console.log(`x: ${x}, y: ${y}`);
-    if (x > this.columns || x < 0) {
-      console.log("false");
-      return false;
+    //x, y
+
+    for (let r = 0; r < this.piece.piece.length; r++) {
+      for (let c = 0; c < this.piece.piece.length; c++) {
+        const offsetX = x + r;
+        const offsetY = y + c;
+
+        /*
+
+        */
+
+        console.log(`offsetX: ${offsetX}, offsetY: ${offsetY}`);
+        if (offsetX > this.columns || offsetX < 0) {
+          console.log("false");
+          return false;
+        }
+        if (offsetY > this.rows || offsetY < 0) {
+          console.log("false");
+          return false;
+        }
+      }
     }
-    if (y > this.rows || y < 0) {
-      console.log("false");
-      return false;
-    }
+
     console.log("true");
     return true;
   }
