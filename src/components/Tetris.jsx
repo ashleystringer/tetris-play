@@ -18,21 +18,19 @@ function reducer(key, action){
         case ACTIONS.UP:
             //change orientation
             console.log("UP");
-            // return { action: "rotate" };
-            break;
+            return { action: "rotate" };
         case ACTIONS.LEFT:
             console.log("LEFT");
-            return {x: -1, y: 0};
+            return { action: "move", movement: { x: -1, y: 0 } };
         case ACTIONS.RIGHT:
             console.log("RIGHT");
-            return {x: 1, y: 0};
+            return { action: "move", movement: { x: 1, y: 0 } };
         case ACTIONS.DOWN:
             console.log("DOWN");
-            return {x: 0, y: 1};
+            return { action: "move", movement: { x: 0, y: 1 } };
         case ACTIONS.PAUSE:
             console.log("PAUSE");
-            // return { action: "pause" };
-            break;
+            return { action: "pause" };
         default:
             break;
     }

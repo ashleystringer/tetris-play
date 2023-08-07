@@ -3,7 +3,7 @@
 * Create a way to display a piece [X]
 * Create a way to take input from keys [X]
 * Create a way to move the piece down, left, and right [X]
-* Make sure the piece is properly bound walls of the board [] ?
+* Make sure the piece is properly bound walls of the board [X]
 * Create a way to change the orientation of the piece []
 * Start on animation []
 

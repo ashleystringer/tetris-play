@@ -7,7 +7,15 @@ export default function GameController({board, playerKey}) {
     useEffect(() => {
         //board.changePosition(playerKey);
         if(board){
-            board.changePosition(playerKey);
+            console.log(playerKey.action);
+            if(playerKey.action == "rotate"){
+                board.changeOrientation();
+            }
+            else if(playerKey.action == "move"){
+                board.changePosition(playerKey.movement);
+            }else if(playerKey.action == "pause"){
+                console.log("pause game");
+            }
         }
     }, [playerKey]);
 

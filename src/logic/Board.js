@@ -118,6 +118,10 @@ export default class Board {
     }
   }
 
+  changeOrientation() {
+    console.log("Orientation changed");
+  }
+
   //reset board
 
   //detect collision
@@ -127,6 +131,10 @@ export default class Board {
 
     for (let r = 0; r < this.piece.piece.length; r++) {
       for (let c = 0; c < this.piece.piece.length; c++) {
+        if (!this.piece.piece[r][c]) {
+          continue;
+        }
+
         const offsetX = x + r;
         const offsetY = y + c;
 
@@ -138,7 +146,7 @@ export default class Board {
         console.log(
           `offsetX: ${offsetX}, offsetY: ${offsetY}, value: ${this.piece.piece[r][c]}`
         );
-        if (offsetX > this.columns || offsetX < 0) {
+        if (offsetX >= this.columns || offsetX < 0) {
           console.log("false");
           console.log(
             `offsetX: ${offsetX}, offsetY: ${offsetY}, value: ${this.piece.piece[r][c]}`
@@ -146,7 +154,7 @@ export default class Board {
           console.log(`r: ${r}, c: ${c}, value: ${this.piece.piece[r][c]}`);
           return false;
         }
-        if (offsetY > this.rows || offsetY < 0) {
+        if (offsetY >= this.rows || offsetY < 0) {
           console.log("false");
           return false;
         }
