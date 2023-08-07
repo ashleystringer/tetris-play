@@ -131,12 +131,19 @@ export default class Board {
         const offsetY = y + c;
 
         /*
-
+          //offset isn't working
+          //
         */
 
-        console.log(`offsetX: ${offsetX}, offsetY: ${offsetY}`);
+        console.log(
+          `offsetX: ${offsetX}, offsetY: ${offsetY}, value: ${this.piece.piece[r][c]}`
+        );
         if (offsetX > this.columns || offsetX < 0) {
           console.log("false");
+          console.log(
+            `offsetX: ${offsetX}, offsetY: ${offsetY}, value: ${this.piece.piece[r][c]}`
+          );
+          console.log(`r: ${r}, c: ${c}, value: ${this.piece.piece[r][c]}`);
           return false;
         }
         if (offsetY > this.rows || offsetY < 0) {
