@@ -97,21 +97,13 @@ export default class Board {
   }
 
   changePosition({ x, y }) {
-    /*
-    //if piece is bound by the board, 
-    //move the piece
-    */
-
     const newX = this.piece.x + x;
     const newY = this.piece.y + y;
-
-    //console.log(`newX: ${newX}, newY: ${newY}`);
 
     if (this.isBound(newX, newY)) {
       //newX, newY
       //undraw board
       this.undrawPiece();
-      //console.log("{x, y} are bound");
       this.piece.x += x;
       this.piece.y += y;
       this.drawPiece();
@@ -120,6 +112,10 @@ export default class Board {
 
   changeOrientation() {
     console.log("Orientation changed");
+    this.undrawPiece();
+    this.piece.rotate();
+    this.drawPiece();
+    //find a way to check for collision
   }
 
   //reset board
@@ -138,30 +134,14 @@ export default class Board {
         const offsetX = x + r;
         const offsetY = y + c;
 
-        /*
-          //offset isn't working
-          //
-        */
-
-        console.log(
-          `offsetX: ${offsetX}, offsetY: ${offsetY}, value: ${this.piece.piece[r][c]}`
-        );
         if (offsetX >= this.columns || offsetX < 0) {
-          console.log("false");
-          console.log(
-            `offsetX: ${offsetX}, offsetY: ${offsetY}, value: ${this.piece.piece[r][c]}`
-          );
-          console.log(`r: ${r}, c: ${c}, value: ${this.piece.piece[r][c]}`);
           return false;
         }
         if (offsetY >= this.rows || offsetY < 0) {
-          console.log("false");
           return false;
         }
       }
     }
-
-    console.log("true");
     return true;
   }
 }
