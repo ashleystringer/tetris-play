@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 
-export default function GameController({board, playerKey}) {
+export default function GameController({board, playerKey, isGameOn}) {
     
     const animRef = useRef(0);
 
     useEffect(() => {
         //board.changePosition(playerKey);
         if(board){
-            console.log(playerKey.action);
             if(playerKey.action == "rotate"){
                 board.changeOrientation();
             }
@@ -15,20 +14,22 @@ export default function GameController({board, playerKey}) {
                 board.changePosition(playerKey.movement);
             }else if(playerKey.action == "pause"){
                 console.log("pause game");
+                //isGameOn = false;
             }
         }
     }, [playerKey]);
 
-    /*
-    useEffect(() => {
+    
+    useEffect(() => { 
         let dropTime = Date.now();
 
         function dropDown(){
-
             let now = Date.now();
             let deltaTime = now - dropTime;
 
             if(deltaTime > 1000){
+                console.log("deltaTime"); 
+                if(board) board.changePosition({ x: 0, y: 1 });
                 dropTime = Date.now();
             }
             //requestAnimationFrame(dropDown);
@@ -37,9 +38,11 @@ export default function GameController({board, playerKey}) {
             }
         }
 
-        return () => { cancelAnimationFrame(animRef.current) }
-    }, [isGameOn])
-    */
+        dropDown();
+
+        return () => { cancelAnimationFrame(animRef.current) };
+    }, [isGameOn, board])
+    
     
     return (
         <div>

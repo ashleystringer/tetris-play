@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Score() {
+export default function ScoreView({score, board}) {
     return (
         <div>
             Score

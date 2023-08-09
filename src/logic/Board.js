@@ -112,10 +112,13 @@ export default class Board {
 
   changeOrientation() {
     console.log("Orientation changed");
-    this.undrawPiece();
-    this.piece.rotate();
-    this.drawPiece();
+
     //find a way to check for collision
+    if (this.isBound(this.piece.x, this.piece.y)) {
+      this.undrawPiece();
+      this.piece.rotate();
+      this.drawPiece();
+    }
   }
 
   //reset board
@@ -138,10 +141,27 @@ export default class Board {
           return false;
         }
         if (offsetY >= this.rows || offsetY < 0) {
+          //test1();
           return false;
         }
       }
     }
     return true;
   }
+
+  pauseGame() {
+    //test
+  }
+
+  /*
+  test1(){
+    //const isRowFilled = this.board[this.rows - 1].every(block => block === 1);
+    if (isRowFilled){
+      //Score
+      //this.board.splice(this.rows - 1, 1);
+      //const newRow = Array.from({length: this.rows});
+      //this.board.unshift(newRow);
+    }
+  }
+  */
 }

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import ScoreView from "./ScoreView";
 import BoardView from "./BoardView";
 import GameController from "./GameController";
 import Board from "../logic/Board";
 import Piece from "../logic/Piece";
+import Score from "../logic/Score";
 
 
 const ACTIONS = {
@@ -32,17 +34,18 @@ function reducer(key, action){
             console.log("PAUSE");
             return { action: "pause" };
         default:
-            break;
+            return { action: "default" };
     }
 }
 
-export default function Tetris() {
+export default function Tetris({ isGameOn }) {
 
     const rows = 20;
     const columns = 10; 
 
     const [key, dispatch] = useReducer(reducer, {}); 
     const [board, setBoard] = useState(null);
+    const [score, setScore] = useState(null);
 
     useEffect(() => {
         document.addEventListener("keydown", dispatch);
@@ -53,13 +56,15 @@ export default function Tetris() {
     useEffect(() => {
         const piece = new Piece();
         setBoard(new Board(rows, columns, piece));
+        setScore(new Score);
     }, []);
 
     return (
         <div>
             Tetris
+            <ScoreView score={score} board={board}/>
             <BoardView board={board}/>
-            <GameController board={board} playerKey={key}/>
+            <GameController board={board} playerKey={key} isGameOn={isGameOn}/>
         </div>
     )
 }
