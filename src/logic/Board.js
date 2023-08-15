@@ -24,6 +24,13 @@ export default class Board {
     this.columns = columns;
     this.block_size = 30;
     this.board = this.createBoard(rows, columns, 0);
+
+    console.table(this.board);
+  }
+
+  resetBoard() {
+    this.board = this.createBoard(this.rows, this.columns, 0);
+    this.piece.reset();
   }
 
   setBoardContext(context) {
@@ -42,7 +49,11 @@ export default class Board {
     console.log(`rows: ${this.rows}, columns: ${this.columns}`);
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.columns; c++) {
-        this.drawPixel(c, r, "white");
+        if (this.board[r][c] == 0) {
+          this.drawPixel(c, r, "white");
+        } else {
+          this.drawPixel(c, r, "blue"); //make this dynamic later
+        }
       }
     }
   }
@@ -69,20 +80,6 @@ export default class Board {
     this.drawPixel(x, y, "white");
   }
 
-  undrawPiece() {
-    console.log("undrawPiece");
-    const pieceGrid = this.piece.piece;
-    for (let r = 0; r < pieceGrid.length; r++) {
-      for (let c = 0; c < pieceGrid[0].length; c++) {
-        if (pieceGrid[r][c] !== 0) {
-          const x = this.piece.x + r;
-          const y = this.piece.y + c;
-          this.drawPixel(x, y, "white"); //x, y
-        }
-      }
-    }
-  }
-
   drawPiece() {
     const pieceGrid = this.piece.piece;
     for (let r = 0; r < pieceGrid.length; r++) {
@@ -91,6 +88,19 @@ export default class Board {
           const x = this.piece.x + r;
           const y = this.piece.y + c;
           this.drawPixel(x, y, "blue"); //x, y
+        }
+      }
+    }
+  }
+
+  undrawPiece() {
+    const pieceGrid = this.piece.piece;
+    for (let r = 0; r < pieceGrid.length; r++) {
+      for (let c = 0; c < pieceGrid[0].length; c++) {
+        if (pieceGrid[r][c] !== 0) {
+          const x = this.piece.x + r;
+          const y = this.piece.y + c;
+          this.drawPixel(x, y, "white"); //x, y
         }
       }
     }
@@ -111,8 +121,6 @@ export default class Board {
   }
 
   changeOrientation() {
-    console.log("Orientation changed");
-
     //find a way to check for collision
     if (this.isBound(this.piece.x, this.piece.y)) {
       this.undrawPiece();
@@ -141,12 +149,33 @@ export default class Board {
           return false;
         }
         if (offsetY >= this.rows || offsetY < 0) {
-          //test1();
+          //console.log("Tetronimo has reached the final row.");
+          this.freeze();
           return false;
         }
+        //console.log(`offsetX: ${offsetX}, offsetY: ${offsetY}`);
+        //console.log(this.board[offsetX][offsetY]);
+        /*if (this.board[offsetX][offsetY] == 1) {
+          console.log("board[x][y] == 1");
+        }*/
       }
     }
     return true;
+  }
+
+  freeze() {
+    //freeze piece
+    this.piece.piece.map((row, x) => {
+      row.map((block, y) => {
+        if (block == 1) {
+          const newX = this.piece.x + x;
+          const newY = this.piece.y + y;
+          this.board[newY][newX] = 1; //fix the variable names
+        }
+      });
+    });
+    console.table(this.board);
+    this.resetBoard();
   }
 
   pauseGame() {
