@@ -29,7 +29,7 @@ export default class Board {
   }
 
   resetBoard() {
-    this.board = this.createBoard(this.rows, this.columns, 0);
+    //this.board = this.createBoard(this.rows, this.columns, 0);
     this.piece.reset();
   }
 
@@ -175,22 +175,21 @@ export default class Board {
       });
     });
     console.table(this.board);
+    this.shift();
     this.resetBoard();
   }
 
-  pauseGame() {
-    //test
-  }
-
-  /*
-  test1(){
-    //const isRowFilled = this.board[this.rows - 1].every(block => block === 1);
-    if (isRowFilled){
+  shift() {
+    const isRowFilled = this.board[this.rows - 1].every(block => block === 1);
+    if (isRowFilled) {
+      console.log("isRowFilled");
       //Score
-      //this.board.splice(this.rows - 1, 1);
-      //const newRow = Array.from({length: this.rows});
-      //this.board.unshift(newRow);
+      this.board.splice(this.rows - 1, 1);
+      const newRow = Array.from({ length: this.columns }, () => 0);
+      console.log(newRow);
+      this.board.unshift(newRow);
+
+      this.drawBoard();
     }
   }
-  */
 }

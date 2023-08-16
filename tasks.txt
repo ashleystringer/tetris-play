@@ -9,6 +9,7 @@
 * Start on "storing" pieces that have dropped down on the board [X]
 * Find a way to redraw the board and create a new piece when this is done [X]
 * Pause game [X]
+* Make the board shift the final row down once that row is filled [X]
 * Start on scoring system []
 * 
 
