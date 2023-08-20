@@ -10,7 +10,10 @@
 * Find a way to redraw the board and create a new piece when this is done [X]
 * Pause game [X]
 * Make the board shift the final row down once that row is filled [X]
-* Start on scoring system []
+* Place the state and dispatch function for Keys in a separate file [X]
+* Place the state and dispatch function for Score in a separate file [X]
+* Rewrite the method for clearing lines [X]
+* Start on scoring system [X]
 * 
 
 

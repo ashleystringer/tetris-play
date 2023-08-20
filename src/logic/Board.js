@@ -5,27 +5,20 @@
   );
   //the same element is being referenced
 }
-
-export function transferToBoard(board, piece, { x, y }) {
-  piece.forEach((row, y_) => {
-    row.forEach((block, x_) => {
-      board[x + x_][y + y_] = block;
-    });
-  });
-
-  return board;
-}*/
+*/
 
 export default class Board {
-  constructor(rows, columns, piece) {
+  constructor(rows, columns, piece, scoreDispatch) {
     this.piece = piece; //add piece
     console.log(this.piece);
     this.rows = rows;
     this.columns = columns;
     this.block_size = 30;
     this.board = this.createBoard(rows, columns, 0);
+    this.scoreDispatch = scoreDispatch;
 
-    console.table(this.board);
+    //console.table(this.board);
+    console.log(this.scoreDispatch);
   }
 
   resetBoard() {
@@ -87,7 +80,7 @@ export default class Board {
         if (pieceGrid[r][c] !== 0) {
           const x = this.piece.x + r;
           const y = this.piece.y + c;
-          this.drawPixel(x, y, "blue"); //x, y
+          this.drawPixel(x, y, "blue");
         }
       }
     }
@@ -100,7 +93,7 @@ export default class Board {
         if (pieceGrid[r][c] !== 0) {
           const x = this.piece.x + r;
           const y = this.piece.y + c;
-          this.drawPixel(x, y, "white"); //x, y
+          this.drawPixel(x, y, "white");
         }
       }
     }
@@ -111,8 +104,6 @@ export default class Board {
     const newY = this.piece.y + y;
 
     if (this.isBound(newX, newY)) {
-      //newX, newY
-      //undraw board
       this.undrawPiece();
       this.piece.x += x;
       this.piece.y += y;
@@ -128,8 +119,6 @@ export default class Board {
       this.drawPiece();
     }
   }
-
-  //reset board
 
   //detect collision
   //board bounds
@@ -180,16 +169,17 @@ export default class Board {
   }
 
   shift() {
-    const isRowFilled = this.board[this.rows - 1].every(block => block === 1);
-    if (isRowFilled) {
-      console.log("isRowFilled");
-      //Score
-      this.board.splice(this.rows - 1, 1);
-      const newRow = Array.from({ length: this.columns }, () => 0);
-      console.log(newRow);
-      this.board.unshift(newRow);
-
-      this.drawBoard();
-    }
+    let numOfLines = 0;
+    this.board.forEach((row, index) => {
+      const isRowFilled = this.board[index].every(block => block === 1);
+      if (isRowFilled) {
+        numOfLines++;
+        this.board.splice(this.rows - 1, 1);
+        const newRow = Array.from({ length: this.columns }, () => 0);
+        this.board.unshift(newRow);
+      }
+    });
+    this.drawBoard();
+    //if(numOfLines > 0)
   }
 }
