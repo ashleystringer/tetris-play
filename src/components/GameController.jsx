@@ -13,7 +13,7 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
             }
             else if(playerKey.action == "move" && !isGamePaused){
                 board.changePosition(playerKey.movement);
-                //
+                if(playerKey.movement.y == 1) scoreDispatch({ type: POINTS_ACTIONS.HARD_DROP });
             }else if(playerKey.action == "pause"){
                 console.log("pause game");
                 setIsGamePaused(prev => !prev);

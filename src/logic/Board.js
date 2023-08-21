@@ -16,9 +16,6 @@ export default class Board {
     this.block_size = 30;
     this.board = this.createBoard(rows, columns, 0);
     this.scoreDispatch = scoreDispatch;
-
-    //console.table(this.board);
-    console.log(this.scoreDispatch);
   }
 
   resetBoard() {
@@ -103,7 +100,7 @@ export default class Board {
     const newX = this.piece.x + x;
     const newY = this.piece.y + y;
 
-    if (this.isBound(newX, newY)) {
+    if (this.isCollision(newX, newY)) {
       this.undrawPiece();
       this.piece.x += x;
       this.piece.y += y;
@@ -113,7 +110,7 @@ export default class Board {
 
   changeOrientation() {
     //find a way to check for collision
-    if (this.isBound(this.piece.x, this.piece.y)) {
+    if (this.isCollision(this.piece.x, this.piece.y)) {
       this.undrawPiece();
       this.piece.rotate();
       this.drawPiece();
@@ -122,7 +119,7 @@ export default class Board {
 
   //detect collision
   //board bounds
-  isBound(x, y) {
+  isCollision(x, y) {
     //x, y
 
     for (let r = 0; r < this.piece.piece.length; r++) {
@@ -142,11 +139,14 @@ export default class Board {
           this.freeze();
           return false;
         }
-        //console.log(`offsetX: ${offsetX}, offsetY: ${offsetY}`);
-        //console.log(this.board[offsetX][offsetY]);
-        /*if (this.board[offsetX][offsetY] == 1) {
+        console.log(`offsetX: ${offsetX}, offsetY: ${offsetY}`);
+        console.table(this.board[offsetY][offsetX] == 1);
+        if (this.board[offsetY][offsetX] == 1) {
           console.log("board[x][y] == 1");
-        }*/
+          //console.log("Tetronimo has reached the final row.");
+          this.freeze();
+          return false;
+        }
       }
     }
     return true;
@@ -154,6 +154,7 @@ export default class Board {
 
   freeze() {
     //freeze piece
+    //console.log(this.board[0][11]);
     this.piece.piece.map((row, x) => {
       row.map((block, y) => {
         if (block == 1) {
@@ -179,6 +180,7 @@ export default class Board {
         this.board.unshift(newRow);
       }
     });
+    console.log(numOfLines);
     this.drawBoard();
     //if(numOfLines > 0)
   }

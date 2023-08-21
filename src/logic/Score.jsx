@@ -17,7 +17,6 @@ export function scoreReducer(state, action){
     case POINTS_ACTIONS.SOFT_DROP:
       return {...state, score: state.score + POINTS_ACTIONS.SOFT_DROP}
     case POINTS_ACTIONS.HARD_DROP:
-      //states.score += ACTIONS.HARD_DROPS;
       return {...state, score: state.score + POINTS_ACTIONS.HARD_DROP}
     case POINTS_ACTIONS.SINGLE:
       //states.lines++;
