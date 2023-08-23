@@ -19,20 +19,13 @@ export function scoreReducer(state, action){
     case POINTS_ACTIONS.HARD_DROP:
       return {...state, score: state.score + POINTS_ACTIONS.HARD_DROP}
     case POINTS_ACTIONS.SINGLE:
-      //states.lines++;
-      //states.score += ACTIONS.SINGLE;
+      console.log("POINTS_ACTIONS.SINGLE");
       return {...state, score: state.score + POINTS_ACTIONS.SINGLE, lines: state.lines + 1}
     case POINTS_ACTIONS.DOUBLE:
-      //states.lines++;
-      //states.score += ACTIONS.DOUBLE;
       return {...state, score: state.score + POINTS_ACTIONS.DOUBLE, lines: state.lines + 1}
     case POINTS_ACTIONS.TRIPLE:
-      //states.lines++;
-      //states.score += ACTIONS.TRIPLE;
       return {...state, score: state.score + POINTS_ACTIONS.TRIPLE, lines: state.lines + 1}
     case POINTS_ACTIONS.TETRIS:
-      //states.lines++;
-      //states.score += ACTIONS.TETRIS;
       return {...state, score: state.score + POINTS_ACTIONS.TETRIS, lines: state.lines + 1}
   }
 }

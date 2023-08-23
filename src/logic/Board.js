@@ -7,6 +7,8 @@
 }
 */
 
+import { POINTS_ACTIONS } from "../logic/Score";
+
 export default class Board {
   constructor(rows, columns, piece, scoreDispatch) {
     this.piece = piece; //add piece
@@ -135,15 +137,13 @@ export default class Board {
           return false;
         }
         if (offsetY >= this.rows || offsetY < 0) {
-          //console.log("Tetronimo has reached the final row.");
           this.freeze();
           return false;
         }
-        console.log(`offsetX: ${offsetX}, offsetY: ${offsetY}`);
-        console.table(this.board[offsetY][offsetX] == 1);
+        if (offsetY == 1 && this.board[offsetY][offsetX] == 1) {
+          console.log("Game Over");
+        }
         if (this.board[offsetY][offsetX] == 1) {
-          console.log("board[x][y] == 1");
-          //console.log("Tetronimo has reached the final row.");
           this.freeze();
           return false;
         }
@@ -154,7 +154,6 @@ export default class Board {
 
   freeze() {
     //freeze piece
-    //console.log(this.board[0][11]);
     this.piece.piece.map((row, x) => {
       row.map((block, y) => {
         if (block == 1) {
@@ -164,7 +163,6 @@ export default class Board {
         }
       });
     });
-    console.table(this.board);
     this.shift();
     this.resetBoard();
   }
@@ -180,8 +178,23 @@ export default class Board {
         this.board.unshift(newRow);
       }
     });
-    console.log(numOfLines);
+    this.updateLines(numOfLines);
+
     this.drawBoard();
-    //if(numOfLines > 0)
+  }
+
+  updateLines(lineNum) {
+    const linePoints =
+      lineNum === 1
+        ? POINTS_ACTIONS.SINGLE
+        : lineNum === 2
+        ? POINTS_ACTIONS.DOUBLE
+        : lineNum === 3
+        ? POINTS_ACTIONS.TRIPLE
+        : lineNum === 4
+        ? POINTS_ACTIONS.TETRIS
+        : 0;
+
+    if (lineNum > 0) this.scoreDispatch({ type: linePoints });
   }
 }

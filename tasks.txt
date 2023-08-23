@@ -14,7 +14,10 @@
 * Place the state and dispatch function for Score in a separate file [X]
 * Rewrite the method for clearing lines [X]
 * Start on scoring system [X]
-* 
+* Figure out how to record lines [X]
+* Game over funcionality [X]
+* Start on levels []
+* Start on functionality to place []
 
 
 
