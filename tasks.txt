@@ -17,7 +17,10 @@
 * Figure out how to record lines [X]
 * Game over funcionality [X]
 * Start on levels []
-* Start on functionality to place []
+    - Must change speed by level []
+    - Must change points by level []
+    - Must display what level the player is on []
+* Start on ghost drop functionality []
 
 
 

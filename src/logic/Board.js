@@ -1,23 +1,15 @@
-/*export function createNewBoard(rows, columns, element) {
-  //return Array.from({ length: rows }, () => Array(columns).fill(element));
-  return Array.from({ length: rows }, () =>
-    Array.from({ length: columns }, () => element)
-  );
-  //the same element is being referenced
-}
-*/
-
 import { POINTS_ACTIONS } from "../logic/Score";
 
 export default class Board {
   constructor(rows, columns, piece, scoreDispatch) {
     this.piece = piece; //add piece
-    console.log(this.piece);
+    //console.log(this.piece);
     this.rows = rows;
     this.columns = columns;
     this.block_size = 30;
     this.board = this.createBoard(rows, columns, 0);
     this.scoreDispatch = scoreDispatch;
+    this.numOfLines = 0;
   }
 
   resetBoard() {
@@ -102,7 +94,8 @@ export default class Board {
     const newX = this.piece.x + x;
     const newY = this.piece.y + y;
 
-    if (this.isCollision(newX, newY)) {
+    if (!this.isCollision(newX, newY)) {
+      this.placeGhost(newX, newY);
       this.undrawPiece();
       this.piece.x += x;
       this.piece.y += y;
@@ -112,7 +105,8 @@ export default class Board {
 
   changeOrientation() {
     //find a way to check for collision
-    if (this.isCollision(this.piece.x, this.piece.y)) {
+    if (!this.isCollision(this.piece.x, this.piece.y)) {
+      //this.placeGhost(this.piece.x, this.piece.y);
       this.undrawPiece();
       this.piece.rotate();
       this.drawPiece();
@@ -134,22 +128,22 @@ export default class Board {
         const offsetY = y + c;
 
         if (offsetX >= this.columns || offsetX < 0) {
-          return false;
+          return true;
         }
         if (offsetY >= this.rows || offsetY < 0) {
           this.freeze();
-          return false;
+          return true;
         }
         if (offsetY == 1 && this.board[offsetY][offsetX] == 1) {
           console.log("Game Over");
         }
         if (this.board[offsetY][offsetX] == 1) {
           this.freeze();
-          return false;
+          return true;
         }
       }
     }
-    return true;
+    return false;
   }
 
   freeze() {
@@ -164,23 +158,53 @@ export default class Board {
       });
     });
     this.shift();
-    this.resetBoard();
+    this.piece.reset();
   }
 
   shift() {
-    let numOfLines = 0;
     this.board.forEach((row, index) => {
       const isRowFilled = this.board[index].every(block => block === 1);
       if (isRowFilled) {
-        numOfLines++;
+        this.numOfLines++;
+
+        console.log(this.numOfLines);
+        if (this.numOfLines > 2) {
+          this.numOfLines = 0;
+          this.scoreDispatch({ type: POINTS_ACTIONS.INCR_LEVEL });
+        }
+
         this.board.splice(this.rows - 1, 1);
         const newRow = Array.from({ length: this.columns }, () => 0);
         this.board.unshift(newRow);
       }
     });
-    this.updateLines(numOfLines);
+    this.updateLines(this.numOfLines);
 
     this.drawBoard();
+  }
+
+  placeGhost(x, y) {
+    //undraw any ghost pieces
+
+    //place ghost of a tetronimo
+    //iterate through each block
+    //"telegraph" the block to some location
+    //find out where the tetronimo is on course to hit a collision
+    //display a transparent version of that piece in that location
+    const ghostRow = this.findGhostRow(x, y);
+
+    //draw the ghost piece
+    //but only if it's soft dropping
+    //console.log(ghostRow);
+  }
+
+  findGhostRow(x, y) {
+    for (let r = y; r < this.board.length; r++) {
+      if (this.board[r][x] === 1) {
+        return r;
+      }
+    }
+    return this.rows;
   }
 
   updateLines(lineNum) {
