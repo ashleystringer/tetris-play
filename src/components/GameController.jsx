@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { POINTS_ACTIONS } from "../logic/Score";
+import { levelSpeed } from "../logic/Score";
 
-export default function GameController({board, playerKey, isGameOn, scoreDispatch}) {
+export default function GameController({board, playerKey, isGameOn, scoreDispatch, scoreData}) {
     
     const [isGamePaused, setIsGamePaused] = useState(false);
     const animRef = useRef(0);
@@ -29,7 +30,9 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
             let now = Date.now();
             let deltaTime = now - dropTime;
 
-            if(deltaTime > 1000){ //Need to change this speed by level
+            const speed = levelSpeed(scoreData.level);
+
+            if(deltaTime > speed){ //Need to change this speed by level
                 if(board) board.changePosition({ x: 0, y: 1 });
                 scoreDispatch({ type: POINTS_ACTIONS.SOFT_DROP });
                 dropTime = Date.now();

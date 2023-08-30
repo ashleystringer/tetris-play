@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-export default function ScoreView({scoreData, levelData}) {
+export default function ScoreView({scoreData}) {
 
     const [score, setScore] = useState(0);
     const [lines, setLines] = useState(0);
     const [level, setLevel] = useState(0);
 
     useEffect(() => {
-        console.log("scoreData useEffect");
         setScore(() => {
             if (scoreData) return scoreData.score;
             return 0;

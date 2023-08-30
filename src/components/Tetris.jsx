@@ -32,7 +32,7 @@ export default function Tetris({ isGameOn }) {
         <div>
             <ScoreView scoreData={scoreState} board={board}/>
             <BoardView board={board}/>
-            <GameController board={board} playerKey={key} isGameOn={isGameOn} scoreDispatch={scoreDispatch}/>
+            <GameController board={board} playerKey={key} isGameOn={isGameOn} scoreDispatch={scoreDispatch} scoreData={scoreState}/>
         </div>
     )
 }
