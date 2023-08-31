@@ -12,7 +12,7 @@ export default function Game() {
 
     return (
         <>
-            {isGameOn ? <Tetris isGameOn={isGameOn}/> : <Menu onCallback={playGame}/>}   
+            {isGameOn ? <Tetris isGameOn={isGameOn} setIsGameOn={setIsGameOn}/> : <Menu onCallback={playGame}/>}   
         </>
     )
 }

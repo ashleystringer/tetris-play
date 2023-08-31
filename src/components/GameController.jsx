@@ -1,8 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import GameOver from "./GameOver";
 import { POINTS_ACTIONS } from "../logic/Score";
 import { levelSpeed } from "../logic/Score";
 
 export default function GameController({board, playerKey, isGameOn, scoreDispatch, scoreData}) {
+
+    /*
+        What this component does - 
+            - creates a timer to drop the piece to animate it
+            - handles user input to move the piece
+            - handles user input to rotate the piece
+            - handles user input to pause the game      
+            - renders the GameOver component
+    */
     
     const [isGamePaused, setIsGamePaused] = useState(false);
     const animRef = useRef(0);
@@ -10,10 +20,10 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
     useEffect(() => {
         if(board){
             if(playerKey.action == "rotate" && !isGamePaused){
-                board.changeOrientation();
+                board.changePieceOrientation();
             }
             else if(playerKey.action == "move" && !isGamePaused){
-                board.changePosition(playerKey.movement);
+                board.changePiecePosition(playerKey.movement);
                 if(playerKey.movement.y == 1) scoreDispatch({ type: POINTS_ACTIONS.HARD_DROP });
             }else if(playerKey.action == "pause"){
                 console.log("pause game");
@@ -33,7 +43,7 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
             const speed = levelSpeed(scoreData.level);
 
             if(deltaTime > speed){ //Need to change this speed by level
-                if(board) board.changePosition({ x: 0, y: 1 });
+                if(board) board.changePiecePosition({ x: 0, y: 1 });
                 scoreDispatch({ type: POINTS_ACTIONS.SOFT_DROP });
                 dropTime = Date.now();
             }
@@ -50,8 +60,12 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
     
     
     return (
-        <div>
-            Game Controller
-        </div>
+        <>
+            {!isGameOn & (
+                <>
+                    <GameOver/>
+                </>
+            )}
+        </>
     )
 }

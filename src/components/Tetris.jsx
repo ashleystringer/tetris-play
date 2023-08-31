@@ -7,8 +7,18 @@ import { scoreReducer, initialPointState } from "../logic/Score";
 import Board from "../logic/Board";
 import Piece from "../logic/Piece";
 
+export default function Tetris({ isGameOn, setIsGameOn }) {
 
-export default function Tetris({ isGameOn }) {
+    /*
+        What this component does - 
+        - creates a reducer for the keys
+        - creates a reducer for the score
+        - initializes the board
+        - initializes the piece
+        - renders the ScoreView component 
+        - renders the BoardView component 
+        - renders the GameController component 
+    */
 
     const rows = 20;
     const columns = 10; 
@@ -25,7 +35,7 @@ export default function Tetris({ isGameOn }) {
 
     useEffect(() => {
         const piece = new Piece();
-        setBoard(new Board(rows, columns, piece, scoreDispatch)); 
+        setBoard(new Board(rows, columns, piece, scoreDispatch, setIsGameOn)); 
     }, []);
 
     return (

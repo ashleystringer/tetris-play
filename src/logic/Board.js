@@ -1,14 +1,33 @@
 import { POINTS_ACTIONS } from "../logic/Score";
 
 export default class Board {
-  constructor(rows, columns, piece, scoreDispatch) {
+  /*
+    What this class does -
+    - draws a pixel 
+    - undraws a pixel 
+    - creates the board
+    - draws a piece 
+    - undraws a piece 
+    - changes the position of the piece
+    - changes the orientation of the piece 
+    - freezes a piece in place
+    - detects collisions from a piece
+    - clears lines off the board
+    - resets board
+
+    - updates line points *
+    - sets the isGameOn state *
+  */
+
+  constructor(rows, columns, piece, scoreDispatch, setIsGameOn) {
     this.piece = piece; //add piece
     //console.log(this.piece);
     this.rows = rows;
     this.columns = columns;
     this.block_size = 30;
     this.board = this.createBoard(rows, columns, 0);
-    this.scoreDispatch = scoreDispatch;
+    this.scoreDispatch = scoreDispatch; // **** !!!!! ****
+    this.setIsGameOn = setIsGameOn; // **** !!!!! ****
     this.numOfLines = 0;
   }
 
@@ -64,6 +83,8 @@ export default class Board {
     this.drawPixel(x, y, "white");
   }
 
+  // Might need to make the code below into a single
+  //function taht drawPiece and undrawPiece use
   drawPiece() {
     const pieceGrid = this.piece.piece;
     for (let r = 0; r < pieceGrid.length; r++) {
@@ -90,20 +111,21 @@ export default class Board {
     }
   }
 
-  changePosition({ x, y }) {
+  changePiecePosition({ x, y }) {
+    //changePiecePosition
     const newX = this.piece.x + x;
     const newY = this.piece.y + y;
 
     if (!this.isCollision(newX, newY)) {
       this.placeGhost(newX, newY);
       this.undrawPiece();
-      this.piece.x += x;
-      this.piece.y += y;
+      this.piece.move(x, y);
       this.drawPiece();
     }
   }
 
-  changeOrientation() {
+  changePieceOrientation() {
+    //changePieceOrientation
     //find a way to check for collision
     if (!this.isCollision(this.piece.x, this.piece.y)) {
       //this.placeGhost(this.piece.x, this.piece.y);
@@ -131,14 +153,15 @@ export default class Board {
           return true;
         }
         if (offsetY >= this.rows || offsetY < 0) {
-          this.freeze();
+          this.freezePiece();
+
           return true;
         }
         if (offsetY == 1 && this.board[offsetY][offsetX] == 1) {
-          console.log("Game Over");
+          this.setIsGameOn(false);
         }
         if (this.board[offsetY][offsetX] == 1) {
-          this.freeze();
+          this.freezePiece();
           return true;
         }
       }
@@ -146,8 +169,7 @@ export default class Board {
     return false;
   }
 
-  freeze() {
-    //freeze piece
+  freezePiece() {
     this.piece.piece.map((row, x) => {
       row.map((block, y) => {
         if (block == 1) {
@@ -157,11 +179,11 @@ export default class Board {
         }
       });
     });
-    this.shift();
+    this.clearLine();
     this.piece.reset();
   }
 
-  shift() {
+  clearLine() {
     this.board.forEach((row, index) => {
       const isRowFilled = this.board[index].every(block => block === 1);
       if (isRowFilled) {
@@ -170,7 +192,7 @@ export default class Board {
         console.log(this.numOfLines);
         if (this.numOfLines > 2) {
           this.numOfLines = 0;
-          this.scoreDispatch({ type: POINTS_ACTIONS.INCR_LEVEL });
+          this.scoreDispatch({ type: POINTS_ACTIONS.INCR_LEVEL }); // **** !!!!! ****
         }
 
         this.board.splice(this.rows - 1, 1);
@@ -178,7 +200,7 @@ export default class Board {
         this.board.unshift(newRow);
       }
     });
-    this.updateLines(this.numOfLines);
+    this.updateLines(this.numOfLines); // **** !!!!! ****
 
     this.drawBoard();
   }
@@ -219,6 +241,6 @@ export default class Board {
         ? POINTS_ACTIONS.TETRIS
         : 0;
 
-    if (lineNum > 0) this.scoreDispatch({ type: linePoints });
+    if (lineNum > 0) this.scoreDispatch({ type: linePoints }); // **** !!!!! ****
   }
 }

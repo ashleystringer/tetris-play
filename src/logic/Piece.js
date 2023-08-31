@@ -1,6 +1,13 @@
 import { tetronimoes } from "./Tetronimoes";
 
 export default class Piece {
+  /*
+    What this class does - 
+    - creates a randomized piece
+    - moves the piece
+    - rotates the piece
+    - resets the piece
+  */
   constructor() {
     this.piece = this.randomizePiece();
     this.x = 0;
@@ -14,6 +21,11 @@ export default class Piece {
     this.piece = this.randomizePiece();
     this.x = 0;
     this.y = 0;
+  }
+
+  move(newX, newY) {
+    this.x += newX;
+    this.y += newY;
   }
 
   rotate() {

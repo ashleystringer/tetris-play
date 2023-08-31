@@ -13,14 +13,17 @@
 * Place the state and dispatch function for Keys in a separate file [X]
 * Place the state and dispatch function for Score in a separate file [X]
 * Rewrite the method for clearing lines [X]
-* Start on scoring system [X]
-* Figure out how to record lines [X]
-* Game over funcionality [X]
-* Start on levels []
-    - Must change speed by level []
-    - Must change points by level []
-    - Must display what level the player is on []
-* Start on ghost drop functionality []
+
+
+What remains - 
+    * Start on scoring system [X]
+    * Figure out how to record lines [X]
+    * Game over funcionality [X]
+    * Start on levels []
+        - Must change speed by level []
+        - Must change points by level []
+        - Must display what level the player is on []
+    * Start on ghost drop functionality []
 
 
 

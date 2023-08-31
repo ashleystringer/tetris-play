@@ -2,6 +2,13 @@ import React, { useEffect } from 'react'
 import "./Board.css";
 
 export default function BoardView({board}) { //board, rows, columns
+    /*
+        What this component does - 
+        - attaches a canvas element to the Board instance
+        - draws the board onto the canvas element
+        - draws the piece onto the canvas element
+        - renders the canvas element for the board
+    */
     
     useEffect(() => {
         if(board){
