@@ -19,6 +19,7 @@ What remains -
     * Start on scoring system [X]
     * Figure out how to record lines [X]
     * Game over funcionality [X]
+        - Make it superimpose on the Tetris board []
     * Start on levels []
         - Must change speed by level []
         - Must change points by level []

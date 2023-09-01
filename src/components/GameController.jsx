@@ -24,7 +24,7 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
             }
             else if(playerKey.action == "move" && !isGamePaused){
                 board.changePiecePosition(playerKey.movement);
-                if(playerKey.movement.y == 1) scoreDispatch({ type: POINTS_ACTIONS.HARD_DROP });
+                if(playerKey.movement.y == 1) scoreDispatch({ type: POINTS_ACTIONS.HARD_DROP }); // !!!!!! hardDrop() !!!!!!!
             }else if(playerKey.action == "pause"){
                 console.log("pause game");
                 setIsGamePaused(prev => !prev);
@@ -40,11 +40,11 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
             let now = Date.now();
             let deltaTime = now - dropTime;
 
-            const speed = levelSpeed(scoreData.level);
+            const speed = levelSpeed(scoreData.level); // !!!!!! levelSpeed() !!!!!!
 
             if(deltaTime > speed){ //Need to change this speed by level
                 if(board) board.changePiecePosition({ x: 0, y: 1 });
-                scoreDispatch({ type: POINTS_ACTIONS.SOFT_DROP });
+                scoreDispatch({ type: POINTS_ACTIONS.SOFT_DROP }); // !!!!!! softDrop() !!!!!!!
                 dropTime = Date.now();
             }
 

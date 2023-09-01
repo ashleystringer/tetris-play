@@ -8,17 +8,17 @@ export default function ScoreView({scoreData}) {
 
     useEffect(() => {
         setScore(() => {
-            if (scoreData) return scoreData.score;
+            if (scoreData) return scoreData.score; // !!!!!! score !!!!!!
             return 0;
         });
 
         setLines(() => {
-            if (scoreData) return scoreData.lines;
+            if (scoreData) return scoreData.lines; // !!!!!! lines !!!!!!
             return 0;
         });
 
         setLevel(() => {
-            if (scoreData) return scoreData.level;
+            if (scoreData) return scoreData.level; // !!!!!! level !!!!!!
             return 0;
         });
         

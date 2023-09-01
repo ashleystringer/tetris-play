@@ -4,6 +4,7 @@ import BoardView from "./BoardView";
 import GameController from "./GameController";
 import { keyReducer } from "../logic/Keys";
 import { scoreReducer, initialPointState } from "../logic/Score";
+import { useGameData } from "../contexts/GameDataProvider";
 import Board from "../logic/Board";
 import Piece from "../logic/Piece";
 
@@ -24,7 +25,7 @@ export default function Tetris({ isGameOn, setIsGameOn }) {
     const columns = 10; 
 
     const [key, keyDispatch] = useReducer(keyReducer, {});
-    const [scoreState, scoreDispatch] = useReducer(scoreReducer, initialPointState);
+    //const [scoreState, scoreDispatch] = useReducer(scoreReducer, initialPointState);
     const [board, setBoard] = useState(null);
 
     useEffect(() => {
@@ -40,9 +41,9 @@ export default function Tetris({ isGameOn, setIsGameOn }) {
 
     return (
         <div>
-            <ScoreView scoreData={scoreState} board={board}/>
+            <ScoreView/>
             <BoardView board={board}/>
-            <GameController board={board} playerKey={key} isGameOn={isGameOn} scoreDispatch={scoreDispatch} scoreData={scoreState}/>
+            <GameController board={board} playerKey={key} isGameOn={isGameOn}/>
         </div>
     )
 }

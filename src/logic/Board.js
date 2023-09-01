@@ -192,7 +192,7 @@ export default class Board {
         console.log(this.numOfLines);
         if (this.numOfLines > 2) {
           this.numOfLines = 0;
-          this.scoreDispatch({ type: POINTS_ACTIONS.INCR_LEVEL }); // **** !!!!! ****
+          this.scoreDispatch({ type: POINTS_ACTIONS.INCR_LEVEL }); // **** !!!!!! incrementLevel() !!!!!! ****
         }
 
         this.board.splice(this.rows - 1, 1);
@@ -200,7 +200,7 @@ export default class Board {
         this.board.unshift(newRow);
       }
     });
-    this.updateLines(this.numOfLines); // **** !!!!! ****
+    this.updateLines(this.numOfLines); // **** !!!!!! updateLines !!!!!! ****
 
     this.drawBoard();
   }
