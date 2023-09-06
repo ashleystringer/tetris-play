@@ -19,10 +19,10 @@ What remains -
     * Start on scoring system [X]
     * Figure out how to record lines [X]
     * Game over funcionality [X]
-    * Start on levels []
-        - Must change speed by level []
-        - Must change points by level []
-        - Must display what level the player is on []
+    * Start on levels [X]
+        - Must change speed by level [X]
+        - Must change points by level [X]
+        - Must display what level the player is on [X]
     * Start on ghost drop functionality []
 
 

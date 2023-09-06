@@ -1,3 +1,18 @@
+.BoardContainer{
+    position: relative;
+}
+
 .Board{
-    display: grid;
+    position: absolute;
+    z-index: 1;
+}
+
+.GameStatus{
+    position: absolute;
+    z-index: 2;
+}
+
+.GameOver button{
+    position: absolute;
+    z-index: 2;
 }

@@ -1,6 +1,8 @@
+import "./Board.css";
 import React, { useState, useEffect, useReducer } from 'react';
 import ScoreView from "./ScoreView";
 import BoardView from "./BoardView";
+import GameStatusView from "./GameStatusView";
 import GameController from "./GameController";
 import { keyReducer } from "../logic/Keys";
 import { scoreReducer, initialPointState } from "../logic/Score";
@@ -26,6 +28,8 @@ export default function Tetris({ isGameOn, setIsGameOn }) {
     const [key, keyDispatch] = useReducer(keyReducer, {});
     const [scoreState, scoreDispatch] = useReducer(scoreReducer, initialPointState);
     const [board, setBoard] = useState(null);
+    const [statusMsg, setStatusMsg] = useState(null);
+    const [isGameOver, setIsGameOver] = useState(false);
 
     useEffect(() => {
         document.addEventListener("keydown", keyDispatch);
@@ -35,14 +39,33 @@ export default function Tetris({ isGameOn, setIsGameOn }) {
 
     useEffect(() => {
         const piece = new Piece();
-        setBoard(new Board(rows, columns, piece, scoreDispatch, setIsGameOn)); 
+        setBoard(new Board(rows, columns, piece, scoreDispatch, setIsGameOver)); 
     }, []);
+
+    useEffect(() => {
+        setStatusMsg(prev => {
+            if(isGameOver) return "Game is over";
+            return null;
+        })
+    }, [isGameOver]);
 
     return (
         <div>
-            <ScoreView scoreData={scoreState} board={board}/>
-            <BoardView board={board}/>
-            <GameController board={board} playerKey={key} isGameOn={isGameOn} scoreDispatch={scoreDispatch} scoreData={scoreState}/>
+                <ScoreView scoreData={scoreState} board={board}/>
+            <div className="BoardContainer">
+                <BoardView board={board}/>
+                <GameStatusView statusMsg={statusMsg}/>
+            </div>
+            <br/>
+            <GameController 
+                board={board} 
+                playerKey={key} 
+                isGameOn={isGameOn}
+                isGameOver={isGameOver} 
+                scoreDispatch={scoreDispatch} 
+                scoreData={scoreState}
+                setStatusMsg={setStatusMsg}
+            />
         </div>
     )
 }

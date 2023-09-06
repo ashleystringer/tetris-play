@@ -1,5 +1,6 @@
 export const POINTS_ACTIONS = {
   INCR_LEVEL: "INCREMENT-LEVEL",
+  RESET_ALL: "RESET-ALL",
   SOFT_DROP: 1,
   HARD_DROP: 2,
   SINGLE: 100,
@@ -17,8 +18,9 @@ export const initialPointState = {
 export function scoreReducer(state, action){
   switch(action.type){
     case POINTS_ACTIONS.INCR_LEVEL: 
-      console.log("POINTS_ACTIONS.INCR_LEVEL");
       return {...state, level: state.level + 1};
+    case POINTS_ACTIONS.RESET_ALL:
+      return {score: 0, level: 0, lines: 0};
     case POINTS_ACTIONS.SOFT_DROP:
       return {...state, score: state.score + POINTS_ACTIONS.SOFT_DROP}
     case POINTS_ACTIONS.HARD_DROP:
@@ -36,5 +38,5 @@ export function scoreReducer(state, action){
 }
 
 export const levelSpeed = (levelNumber => {
-  return 1000 - (levelNumber * 150);
+  return 1000 - (levelNumber * 175);
 });

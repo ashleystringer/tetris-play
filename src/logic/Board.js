@@ -19,7 +19,7 @@ export default class Board {
     - sets the isGameOn state *
   */
 
-  constructor(rows, columns, piece, scoreDispatch, setIsGameOn) {
+  constructor(rows, columns, piece, scoreDispatch, setIsGameOver) {
     this.piece = piece; //add piece
     //console.log(this.piece);
     this.rows = rows;
@@ -27,12 +27,15 @@ export default class Board {
     this.block_size = 30;
     this.board = this.createBoard(rows, columns, 0);
     this.scoreDispatch = scoreDispatch; // **** !!!!! ****
-    this.setIsGameOn = setIsGameOn; // **** !!!!! ****
+    this.setIsGameOver = setIsGameOver; // **** !!!!! ****
     this.numOfLines = 0;
   }
 
   resetBoard() {
-    //this.board = this.createBoard(this.rows, this.columns, 0);
+    this.board = this.createBoard(this.rows, this.columns, 0);
+    this.setIsGameOver(false);
+    this.scoreDispatch({ type: POINTS_ACTIONS.RESET_ALL });
+    this.drawBoard();
     this.piece.reset();
   }
 
@@ -158,7 +161,7 @@ export default class Board {
           return true;
         }
         if (offsetY == 1 && this.board[offsetY][offsetX] == 1) {
-          this.setIsGameOn(false);
+          this.setIsGameOver(true);
         }
         if (this.board[offsetY][offsetX] == 1) {
           this.freezePiece();

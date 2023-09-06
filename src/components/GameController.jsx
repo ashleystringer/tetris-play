@@ -3,7 +3,15 @@ import GameOver from "./GameOver";
 import { POINTS_ACTIONS } from "../logic/Score";
 import { levelSpeed } from "../logic/Score";
 
-export default function GameController({board, playerKey, isGameOn, scoreDispatch, scoreData}) {
+export default function GameController({
+    board, 
+    playerKey, 
+    isGameOn, 
+    isGameOver, 
+    scoreDispatch, 
+    scoreData,
+    setStatusMsg
+}) {
 
     /*
         What this component does - 
@@ -18,16 +26,24 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
     const animRef = useRef(0);
 
     useEffect(() => {
+        console.log(`isGameOver: ${isGameOver}`);
+    }, [isGameOver]);
+
+    useEffect(() => {
         if(board){
-            if(playerKey.action == "rotate" && !isGamePaused){
+            if(playerKey.action == "rotate" && !isGamePaused && !isGameOver){
                 board.changePieceOrientation();
             }
-            else if(playerKey.action == "move" && !isGamePaused){
+            else if(playerKey.action == "move" && !isGamePaused && !isGameOver){
                 board.changePiecePosition(playerKey.movement);
                 if(playerKey.movement.y == 1) scoreDispatch({ type: POINTS_ACTIONS.HARD_DROP });
-            }else if(playerKey.action == "pause"){
+            }else if(playerKey.action == "pause" && !isGameOver){
                 console.log("pause game");
                 setIsGamePaused(prev => !prev);
+                setStatusMsg(prev => {
+                    const msg = prev ? null : "Paused";
+                    return msg;
+                });
             }
         }
     }, [playerKey]);
@@ -48,7 +64,7 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
                 dropTime = Date.now();
             }
 
-            if(!isGamePaused){ 
+            if(!isGamePaused && !isGameOver){ 
                 animRef.current = requestAnimationFrame(dropDown);
             }
         }
@@ -56,14 +72,14 @@ export default function GameController({board, playerKey, isGameOn, scoreDispatc
         dropDown();
 
         return () => { cancelAnimationFrame(animRef.current) };
-    }, [isGameOn, isGamePaused, board])
+    }, [isGameOn, isGameOver, isGamePaused, board])
     
     
     return (
         <>
-            {!isGameOn & (
+            {isGameOver && (
                 <>
-                    <GameOver/>
+                    <GameOver board={board}/>
                 </>
             )}
         </>

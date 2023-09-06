@@ -21,7 +21,7 @@ export default function BoardView({board}) { //board, rows, columns
 
     return (
         <>
-            <canvas id="canvas" width="600" height="750"></canvas>
+            <canvas id="canvas" width="600" height="750" className="Board"></canvas>
         </>
     )
 }
