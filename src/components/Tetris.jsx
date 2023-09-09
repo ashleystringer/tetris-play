@@ -50,7 +50,7 @@ export default function Tetris({ isGameOn, setIsGameOn }) {
     }, [isGameOver]);
 
     return (
-        <div>
+        <div className="TetrisContainer">
                 <ScoreView scoreData={scoreState} board={board}/>
             <div className="BoardContainer">
                 <BoardView board={board}/>

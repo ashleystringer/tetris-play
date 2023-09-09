@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import "./Board.css";
 
 export default function ScoreView({scoreData}) {
 
@@ -25,7 +26,7 @@ export default function ScoreView({scoreData}) {
     }, [scoreData]);
 
     return (
-        <div>
+        <div className="GameStats">
             Score: {score}
             <br/>
             Lines: {lines}

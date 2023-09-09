@@ -8,9 +8,7 @@ export default function GameOver({ board }) {
     }
 
     return (
-        <div className="GameOver">
-            Game Over
-            <br/>
+        <div>
             <button onClick={handleClick}>Will you click the button?</button>
         </div>
     )

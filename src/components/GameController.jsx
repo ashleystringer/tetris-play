@@ -76,12 +76,12 @@ export default function GameController({
     
     
     return (
-        <>
+        <div className="GameOver">
             {isGameOver && (
                 <>
                     <GameOver board={board}/>
                 </>
             )}
-        </>
+        </div>
     )
 }
